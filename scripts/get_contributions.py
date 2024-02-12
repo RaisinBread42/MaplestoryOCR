@@ -68,17 +68,23 @@ class DataProcessor:
         for result in results:
             scores = result[-3:]
             person = result[:-3]
-            name_job_level_title_string = ' '.join(person).replace('.', ' ').replace(')', ' ')
+            name_job_level_title_string = ' '.join(person).replace('.', ' ')#.replace(')', ' ')
             name_job_level_title_list = name_job_level_title_string.split()
 
             name = name_job_level_title_list[0]
             level = name_job_level_title_list[-2][-3:]
             culvert = scores[-2]
             flag = scores[-1]
+            
 
-            final_results.append([name, level, culvert, flag])
+            job = name_job_level_title_string
+            job = job.replace(name,'').replace(level,'').split()
+            job.pop() # remove last string (rank)
+            job = ' '.join(job) if len(job) >= 1 else 'Unknown'
 
-        df = pd.DataFrame(final_results, columns=['IGN', 'LVL', 'CULVERT', 'FLAG'])
+            final_results.append([name, job, level, culvert, flag])
+
+        df = pd.DataFrame(final_results, columns=['IGN', 'CLASS', 'LVL', 'CULVERT', 'FLAG'])
         output_file = f"./data/output/{date.today()}_raw.csv"
         df.to_csv(output_file, index=False)
         print(f"Raw data saved to {output_file}")
