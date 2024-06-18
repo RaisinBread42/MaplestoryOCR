@@ -66,21 +66,28 @@ class DataProcessor:
     def process_results(results: list):
         final_results = []
         for result in results:
-            scores = result[-3:]
-            person = result[:-3]
+            scores = result[-3:] # third index from end -> to last index, first index = 1
+            person = result[:-3] # beginning to 3 index from end, exlcudes all scores
             name_job_level_title_string = ' '.join(person).replace('.', ' ')#.replace(')', ' ')
             name_job_level_title_list = name_job_level_title_string.split()
 
             name = name_job_level_title_list[0]
-            level = name_job_level_title_list[-2][-3:]
-            culvert = scores[-2]
-            flag = scores[-1]
-            
 
-            job = name_job_level_title_string
-            job = job.replace(name,'').replace(level,'').split()
-            job.pop() # remove last string (rank)
-            job = ' '.join(job) if len(job) >= 1 else 'Unknown'
+            if len(name_job_level_title_list) < 4: # didn't parse out list properly
+                level = 0
+                culvert = 0
+                flag = 0
+                job = "Unknown"
+            else:
+                level = name_job_level_title_list[-2][-3:]
+                culvert = scores[-2]
+                flag = scores[-1]
+
+                job = name_job_level_title_string
+                job = job.replace(name,'').replace(level,'').split()
+                job.pop() # remove last string (rank)
+                job = ' '.join(job) if len(job) >= 1 else 'Unknown'
+
 
             final_results.append([name, job, level, culvert, flag])
 
