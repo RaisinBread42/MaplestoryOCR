@@ -1,7 +1,7 @@
 # GMS Guild Contributions Extractor
 
 ## Requirements
-- Python 3.7.9
+- Python 3.10.6 https://www.python.org/downloads/release/python-3106/
 
 ## How to Use (Windows)
 

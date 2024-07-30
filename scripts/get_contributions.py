@@ -1,3 +1,10 @@
+import numpy
+print(numpy.__version__)
+
+import numpy.core._multiarray_umath
+abi_version = hex(id(numpy.core._multiarray_umath))
+print(abi_version)
+
 import os
 import statistics
 from datetime import date
